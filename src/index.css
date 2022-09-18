@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+    padding: 0;
+    margin: 0;
+    font-family: "YouTube Noto", Roboto, Arial, Helvetica, sans-serif;
+
+    min-height: var(--visible-height);
+    height: 100%;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body > div {
+    height: 100%;
+    position: relative;
+}
+
+.drag-shadow {
+    transform: scale(1.1);
+}
+
+.drag-shadow::before,
+.drag-shadow::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    background: linear-gradient(
+        45deg,
+        #fb0094,
+        #0000ff,
+        #00ff00,
+        #ffff00,
+        #ff0000,
+        #fb0094,
+        #0000ff,
+        #00ff00,
+        #ffff00,
+        #ff0000
+    );
+    background-size: 400%;
+    width: 86%;
+    height: 86%;
+    animation: animate 100s linear infinite;
+}
+
+.drag-shadow::before,
+.drag-shadow::after {
+    filter: blur(15px);
+}
+
+@keyframes animate {
+    0% {
+        background-position: 0 0;
+    }
+
+    40% {
+        background-position: 400% 0;
+    }
+
+    100% {
+        background-position: 0 0;
+    }
+}
