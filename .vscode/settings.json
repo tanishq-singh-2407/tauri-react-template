@@ -19,5 +19,8 @@
     "prettier.tabWidth": 4,
     "editor.formatOnSaveMode": "modifications",
     "editor.formatOnType": true,
-    "editor.wordWrap": "off"
+    "editor.wordWrap": "off",
+    "deno.enable": true,
+    "deno.lint": true,
+    "deno.enablePaths": ["updater"]
 }
