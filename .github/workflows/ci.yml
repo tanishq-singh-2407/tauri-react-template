@@ -23,8 +23,7 @@ jobs:
         with:
           node-version: 16
 
-      - name: Check latest release version
-        id: tauriReactTemplate
+      - id: tauriReactTemplate
         uses: pozetroninc/github-action-get-latest-release@master
         with:
           owner: tanishq-singh-2301
