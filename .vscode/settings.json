@@ -18,5 +18,6 @@
     "editor.detectIndentation": false,
     "prettier.tabWidth": 4,
     "editor.formatOnSaveMode": "file",
-    "editor.formatOnType": true
+    "editor.formatOnType": true,
+    "editor.wordWrap": "off"
 }

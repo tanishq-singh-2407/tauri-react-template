@@ -10,7 +10,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform: [macos-latest, ubuntu-latest, windows-latest]
+        platform: [ubuntu-latest, windows-latest]
 
     runs-on: ${{ matrix.platform }}
 
@@ -44,7 +44,6 @@ jobs:
 
       - name: Build the app
         uses: tauri-apps/tauri-action@v0
-
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -60,15 +59,6 @@ jobs:
         with:
           name: small-screen.deb
           path: src-tauri/target/release/bundle/deb/small-screen_*_amd64.deb
-
-          retention-days: 1
-
-      - if: matrix.platform == 'macos-latest'
-        name:  Uploading build artifact ☁️
-        uses: actions/upload-artifact@v2
-        with:
-          name: small-screen.dmg
-          path: src-tauri/target/release/bundle/dmg/small-screen_*_x64.dmg
 
           retention-days: 1
 
