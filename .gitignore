@@ -19,3 +19,4 @@ dist-ssr
 
 tauri-private.key
 tauri-private.key.pub
+tauri-private.key.password

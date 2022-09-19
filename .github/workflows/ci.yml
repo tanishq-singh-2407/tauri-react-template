@@ -23,6 +23,18 @@ jobs:
         with:
           node-version: 16
 
+      - name: Check latest release version
+        id: tauriReactTemplate
+        uses: pozetroninc/github-action-get-latest-release@master
+        with:
+          owner: tanishq-singh-2301
+          repo: tauri-react-template
+          excludes: prerelease, draft
+
+      - run: echo ${{ steps.tauriReactTemplate.outputs.release }}
+
+      - if: false
+
       - name: Setup pnpm
         uses: pnpm/action-setup@v2.2.2
         with:

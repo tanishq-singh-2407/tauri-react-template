@@ -2,15 +2,16 @@ import { oak } from './deps.ts';
 
 const { Application, Router } = oak;
 
-const PORT = "3000";
-const HOSTNAME = '0.0.0.0';
-
+const port = 3000;
 const app = new Application();
 const router = new Router();
 
 router.get("/", ({ response,  }) => {
-    response.status = 400;
-    response.body = "Hello World!";
+    response.status = 200;
+    response.type = "application/json";
+    response.body = {
+        so: "Hello World!"
+    };
 });
 
 router.get("/v1/:target/:arch/:current_version", ({ response, params }) => {
@@ -23,4 +24,4 @@ router.get("/v1/:target/:arch/:current_version", ({ response, params }) => {
 app.use(router.routes());
 app.use(router.allowedMethods());
 
-await app.listen(`${HOSTNAME}:${PORT}`);
+await app.listen({ port });
