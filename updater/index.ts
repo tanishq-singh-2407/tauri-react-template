@@ -6,12 +6,21 @@ const port = 5000;
 const app = new Application();
 const router = new Router();
 
-router.get("/", ({ response,  }) => {
-    response.status = 200;
-    response.type = "application/json";
-    response.body = {
-        so: "Hello World!"
-    };
+router.get("/", async ({ response }) => {
+    try {
+        const release = await fetch("https://api.github.com/repos/tanishq-singh-2301/tauri-react-template/releases/latest", {
+            method: "GET"
+        });
+
+        const data = await release.json();
+    
+        response.status = 200;
+        response.type = "application/json";
+        response.body = data
+    } catch (_) {
+        response.status = 500;
+        response.body = "Internal Server Error"
+    }
 });
 
 router.get("/v1/:target/:arch/:current_version", ({ response, params }) => {
