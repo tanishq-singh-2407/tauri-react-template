@@ -16,3 +16,6 @@ dist-ssr
 
 .idea
 .DS_Store
+
+tauri-private.key
+tauri-private.key.pub

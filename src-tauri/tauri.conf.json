@@ -7,7 +7,7 @@
     },
     "package": {
         "productName": "small-screen",
-        "version": "0.0.3"
+        "version": "0.0.4"
     },
     "tauri": {
         "allowlist": {
@@ -50,7 +50,12 @@
             "csp": null
         },
         "updater": {
-            "active": false
+            "active": true,
+            "endpoints": [
+                "https://tauri-react-updater.deno.dev/v1/{{target}}/{{arch}}/{{current_version}}"
+            ],
+            "dialog": true,
+            "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEYyQTAyQzlFMzI1ODI5QjYKUldTMktWZ3luaXlnOHZKbzZHUjJiRjVyVTV6UEZ2SUt0VTZuV3JuMzJKQng1blczYzRmbklzbjEK"
         },
         "windows": [
             {
