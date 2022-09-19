@@ -52,23 +52,3 @@ jobs:
           tagName: App-v__VERSION__
           releaseName: 'App v__VERSION__'
           releaseBody: 'See the assets to download this version and install.'
-          releaseDraft: false
-          prerelease: false
-
-      # - if: matrix.platform == 'ubuntu-latest'
-      #   name:  Uploading build artifact ☁️
-      #   uses: actions/upload-artifact@v2
-      #   with:
-      #     name: small-screen.deb
-      #     path: src-tauri/target/release/bundle/deb/small-screen_*_amd64.deb
-
-      #     retention-days: 1
-
-      # - if: matrix.platform == 'windows-latest'
-      #   name:  Uploading build artifact ☁️
-      #   uses: actions/upload-artifact@v2
-      #   with:
-      #     name: small-screen.msi
-      #     path: src-tauri/target/release/bundle/msi/small-screen_*_x64_en-US.msi
-
-      #     retention-days: 1

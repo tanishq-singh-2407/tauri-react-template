@@ -17,7 +17,7 @@
     "editor.insertSpaces": true,
     "editor.detectIndentation": false,
     "prettier.tabWidth": 4,
-    "editor.formatOnSaveMode": "file",
+    "editor.formatOnSaveMode": "modifications",
     "editor.formatOnType": true,
     "editor.wordWrap": "off"
 }

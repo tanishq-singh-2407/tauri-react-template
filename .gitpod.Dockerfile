@@ -5,6 +5,7 @@ USER root
 
 RUN apt update
 
+# Installing necessary packages for tauri (ubuntu)
 RUN apt install -yq build-essential \
         libwebkit2gtk-4.0-dev  \
         build-essential \
@@ -17,5 +18,9 @@ RUN apt install -yq build-essential \
         librsvg2-dev
 
 RUN rm -rf /var/lib/{apt,dpkg,cache,log}/ /tmp/* /var/tmp/*
+
+# Installing Deno
+RUN curl -fsSL https://deno.land/x/install/install.sh | sh
+RUN /home/gitpod/.deno/bin/deno completions bash > /home/gitpod/.bashrc.d/90-deno && echo 'export PATH="/home/gitpod/.deno/bin:$PATH"' >> /home/gitpod/.bashrc.d/90-deno
 
 USER gitpod
