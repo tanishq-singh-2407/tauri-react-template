@@ -1,7 +1,7 @@
 {
     "name": "small-screen",
     "private": true,
-    "version": "0.0.5",
+    "version": "0.0.6",
     "type": "module",
     "scripts": {
         "dev": "vite",
@@ -9,7 +9,8 @@
         "preview": "vite preview",
         "tauri": "tauri",
         "serve": "serve -s dist",
-        "pretty": "prettier --write src"
+        "pretty": "prettier --write src",
+        "updater": "deno run --allow-net ./updater/index.ts"
     },
     "dependencies": {
         "@tauri-apps/api": "^1.1.0",

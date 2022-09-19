@@ -1,2 +1,21 @@
 image:
-    file: .gitpod.Dockerfile
+  file: .gitpod.Dockerfile
+
+tasks:
+  - name: WebApp
+    before: pnpm install
+    command: pnpm dev
+
+  - name: Updater
+    command: pnpm updater
+
+ports:
+  - name: Updater (server)
+    port: 5000
+    visibility: public
+    onOpen: notify
+
+  - name: Web app
+    port: 3000
+    visibility: public
+    onOpen: notify

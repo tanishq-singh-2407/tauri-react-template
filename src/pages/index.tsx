@@ -7,7 +7,7 @@ import { relaunch } from '@tauri-apps/api/process'
 import { useState } from "react";
 
 const Home = (): JSX.Element => {
-    const [temp, setTemp] = useState<string>("");
+    const [temp, setTemp] = useState<string>("Check For Update");
 
     return (
         <div className="h-full w-full flex justify-start items-center flex-col bg-[#f3f2f3]">
@@ -20,7 +20,7 @@ const Home = (): JSX.Element => {
                     className="absolute top-1/2 left-10 -translate-y-1/2 z-10"
                     onClick={async () => {
                         try {
-                            if (temp.includes("Checking")) {
+                            if (temp.includes("Checking") || temp.includes("Checked")) {
                                 setTemp("Check For Update")
                             }
 
@@ -29,13 +29,16 @@ const Home = (): JSX.Element => {
                                 setTemp("Checking : ".concat(os));
 
                                 const { shouldUpdate } = await checkUpdate();
-                                
+                                setTemp("Checked : ".concat(Boolean(shouldUpdate).toString()))
+
                                 if (shouldUpdate) {
                                     await installUpdate();
                                     await relaunch();
                                 }
                             }
-                        } catch (_) { }
+                        } catch (_) {
+                            console.error("OS type not compatible");
+                        }
                     }}
                 >
                     {temp}

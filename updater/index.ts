@@ -2,7 +2,7 @@ import { oak } from './deps.ts';
 
 const { Application, Router } = oak;
 
-const port = 3000;
+const port = 5000;
 const app = new Application();
 const router = new Router();
 
