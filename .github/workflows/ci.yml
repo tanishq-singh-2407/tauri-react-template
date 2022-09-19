@@ -32,8 +32,6 @@ jobs:
 
       - run: echo ${{ steps.tauriReactTemplate.outputs.release }}
 
-      - if: false
-
       - name: Setup pnpm
         uses: pnpm/action-setup@v2.2.2
         with:
@@ -56,6 +54,7 @@ jobs:
           pnpm build
 
       - name: Build the app
+        if: false
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
