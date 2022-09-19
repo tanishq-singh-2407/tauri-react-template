@@ -23,14 +23,23 @@ jobs:
         with:
           node-version: 16
 
-      - id: tauriReactTemplate
+      - name: Reading latest release version
+        id: appLatest
         uses: pozetroninc/github-action-get-latest-release@master
         with:
           owner: tanishq-singh-2301
           repo: tauri-react-template
           excludes: prerelease, draft
 
-      - run: echo ${{ steps.tauriReactTemplate.outputs.release }}
+      - name: Reading Current tauri-app version
+        id: appCurrent
+        uses: notiz-dev/github-action-json-property@release
+        with: 
+          path: 'src-tauri/tauri.conf.json'
+          prop_path: 'package.version'
+
+      - run: echo "Latest Release,   v${{ steps.appLatest.outputs.release }}"
+      - run: echo "Current Building, v${{ steps.appCurrent.outputs.prop }}"
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v2.2.2
@@ -53,14 +62,14 @@ jobs:
           pnpm i
           pnpm build
 
-      - name: Build the app
-        if: false
+      - name: Build the app and release new build
+        if: steps.appLatest.outputs.release != steps.appCurrent.outputs.prop
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
           TAURI_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
         with:
-          tagName: app-v__VERSION__
+          tagName: __VERSION__
           releaseName: 'App v__VERSION__'
           releaseBody: 'See the assets to download this version and install.'
