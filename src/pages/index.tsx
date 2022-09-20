@@ -1,19 +1,21 @@
 import { type } from '@tauri-apps/api/os';
 import { useEffect, useState } from 'react';
 
+const WEB_APP: boolean = import.meta.env.VITE_PUBLIC_WEB_APP as string === "true";
+
 const Home = () => {
-    const TAURI_APP: boolean = import.meta.env.VITE_TAURI_APP as string === "true";
     const [os, setOs] = useState<string>("");
 
     useEffect(() => {
-        if (TAURI_APP) {
+        if (WEB_APP)
+            setOs("Web");
+
+        else {
             (async () => {
                 const osType = await type();
                 setOs(osType);
             })();
         }
-
-        else setOs("Web");
     }, []);
 
     return (
