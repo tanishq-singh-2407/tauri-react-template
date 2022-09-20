@@ -2,7 +2,9 @@ import Counter from "@/components/counter";
 import { useEffect } from "react";
 
 const Home = () => {
-    useEffect(() => alert("Hey!"), []);
+    useEffect(() => {
+        setTimeout(() => alert("Hey! Hi"), 10 * 1000);
+    }, []);
 
     return (
         <div className="min-h-visible h-full w-full">
