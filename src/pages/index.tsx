@@ -29,11 +29,16 @@ const Home = (): JSX.Element => {
                                 setTemp("Checking : ".concat(os));
 
                                 const { shouldUpdate } = await checkUpdate();
-                                setTemp("Checked : ".concat(shouldUpdate ? "yes" : "no"))
 
                                 if (shouldUpdate) {
+                                    setTemp("Checked: Yes update");
+
                                     await installUpdate();
                                     await relaunch();
+                                }
+
+                                else {
+                                    setTemp("Checked: No update");
                                 }
                             }
                         } catch (_) {
