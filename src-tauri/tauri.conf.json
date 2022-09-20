@@ -1,13 +1,13 @@
 {
     "build": {
-        "beforeDevCommand": "pnpm dev",
-        "beforeBuildCommand": "pnpm build",
+        "beforeDevCommand": "pnpm dev:app",
+        "beforeBuildCommand": "pnpm build:app",
         "devPath": "http://localhost:3000",
         "distDir": "../dist"
     },
     "package": {
         "productName": "tauri-react-template",
-        "version": "1.0.14"
+        "version": "1.0.15"
     },
     "tauri": {
         "allowlist": {

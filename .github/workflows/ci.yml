@@ -106,6 +106,31 @@ jobs:
           pnpm i
           pnpm build
 
+      - name: Build the app and release new build
+        id: tauriBuilder
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
+          TAURI_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
+        with:
+          tagName: __VERSION__
+          releaseName: 'App v__VERSION__'
+          releaseBody: 'See the assets to download this version and install.'
+
+  discord:
+    needs: CI
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Node.js setup
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16
+
       - name: Reading Current tauri-app version
         id: appCurrent
         uses: notiz-dev/github-action-json-property@release
@@ -119,18 +144,6 @@ jobs:
         with: 
           path: 'package.json'
           prop_path: 'version'
-
-      - name: Build the app and release new build
-        id: tauriBuilder
-        uses: tauri-apps/tauri-action@v0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
-          TAURI_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
-        with:
-          tagName: __VERSION__
-          releaseName: 'App v__VERSION__'
-          releaseBody: 'See the assets to download this version and install.'
 
       - name: Update discord if job succeeded
         uses: sarisia/actions-status-discord@v1
