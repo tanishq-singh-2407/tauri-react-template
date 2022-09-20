@@ -29,7 +29,7 @@ const Home = (): JSX.Element => {
                                 setTemp("Checking : ".concat(os));
 
                                 const { shouldUpdate } = await checkUpdate();
-                                setTemp("Checked : ".concat(Boolean(shouldUpdate).toString()))
+                                setTemp("Checked : ".concat(shouldUpdate ? "yes" : "no"))
 
                                 if (shouldUpdate) {
                                     await installUpdate();
@@ -37,7 +37,7 @@ const Home = (): JSX.Element => {
                                 }
                             }
                         } catch (_) {
-                            console.error("OS type not compatible");
+                            console.error((_ as any).message);
                         }
                     }}
                 >
