@@ -10,11 +10,6 @@ jobs:
     name: Check update for appCurrent
     runs-on: ubuntu-latest
 
-    env:
-      latest_app: ${{ steps.appLatest.outputs.release }}
-      current_app: ${{ steps.appCurrent.outputs.prop }}
-      current_repo: ${{ steps.repoCurrent.outputs.prop }}
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -41,11 +36,11 @@ jobs:
           path: 'package.json'
           prop_path: 'version'
 
-      - run: echo "Latest Release,   v${{ latest_app }}"
-      - run: echo "Current Building, v${{ current_app }}"
+      - run: echo "Latest Release,   v${{ steps.appLatest.outputs.release }}"
+      - run: echo "Current Building, v${{ steps.appCurrent.outputs.prop }}"
 
       - name: Check Versions
-        if: latest_app == current_app
+        if: steps.appLatest.outputs.release == steps.appCurrent.outputs.prop
         run: exit 1
 
       - name: Cancel workflow if no new update (app)
@@ -64,8 +59,8 @@ jobs:
           nodetail: true
           title: New version of `updater` is ready!
           description: |
-            Application : `v${{ __VERSION__ }}`
-            Repository  : `v${{ __VERSION__ }}`
+            Application : `v${{ steps.repoCurrent.outputs.prop }}`
+            Repository  : `v${{ steps.appCurrent.outputs.prop }}`
 
             Click [here](https://tauri-react-template.vercel.app) to see preview!
             Click [here](https://github.com/tanishq-singh-2301/tauri-react-template/releases/latest) to download!
@@ -80,10 +75,6 @@ jobs:
         platform: [ubuntu-latest, windows-latest]
 
     runs-on: ${{ matrix.platform }}
-
-    env:
-      current_app: ${{ steps.appCurrent.outputs.prop }}
-      current_repo: ${{ steps.repoCurrent.outputs.prop }}
 
     steps:
       - name: Checkout repository
@@ -149,8 +140,8 @@ jobs:
           nodetail: true
           title: New version of `application` is ready! and maybe of `updater` too!.
           description: |
-            Application : `v${{ __VERSION__ }}`
-            Repository  : `v${{ __VERSION__ }}`
+            Application : `v${{ steps.appCurrent.outputs.prop }}`
+            Repository  : `v${{ steps.repoCurrent.outputs.prop }}`
 
             Click [here](https://tauri-react-template.vercel.app) to see preview!
             Click [here](https://github.com/tanishq-singh-2301/tauri-react-template/releases/latest) to download!
