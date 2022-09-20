@@ -10,11 +10,16 @@ jobs:
     name: Check update for appCurrent
     runs-on: ubuntu-latest
 
+    outputs:
+      latest_app: ${{ steps.appLatest.outputs.release }}
+      current_app: ${{ steps.appCurrent.outputs.prop }}
+      current_repo: ${{ steps.repoCurrent.outputs.prop }}
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Reading latest release version
+      - name: Reading latest released version
         id: appLatest
         uses: pozetroninc/github-action-get-latest-release@master
         with:
@@ -36,11 +41,11 @@ jobs:
           path: 'package.json'
           prop_path: 'version'
 
-      - run: echo "Latest Release,   v${{ steps.appLatest.outputs.release }}"
-      - run: echo "Current Building, v${{ steps.appCurrent.outputs.prop }}"
+      - run: echo "Latest Release,   v${{ latest_app }}"
+      - run: echo "Current Building, v${{ current_app }}"
 
       - name: Check Versions
-        if: steps.appLatest.outputs.release == steps.appCurrent.outputs.prop
+        if: latest_app == current_app
         run: exit 1
 
       - name: Cancel workflow if no new update (app)
@@ -59,7 +64,9 @@ jobs:
           nodetail: true
           title: New version of `updater` is ready!
           description: |
-            Version `${{ steps.repoCurrent.outputs.prop }}`
+            Application : `v${{ __VERSION__ }}`
+            Repository  : `v${{ __VERSION__ }}`
+            
             Click [here](https://tauri-react-template.vercel.app) to see preview!
             Click [here](https://github.com/tanishq-singh-2301/tauri-react-template/releases/latest) to download!
             Click [here](https://tauri-react-updater.deno.dev) to see updater!
@@ -73,6 +80,10 @@ jobs:
         platform: [ubuntu-latest, windows-latest]
 
     runs-on: ${{ matrix.platform }}
+
+    outputs:
+      current_app: ${{ steps.appCurrent.outputs.prop }}
+      current_repo: ${{ steps.repoCurrent.outputs.prop }}
 
     steps:
       - name: Checkout repository
@@ -104,6 +115,20 @@ jobs:
           pnpm i
           pnpm build
 
+      - name: Reading Current tauri-app version
+        id: appCurrent
+        uses: notiz-dev/github-action-json-property@release
+        with: 
+          path: 'src-tauri/tauri.conf.json'
+          prop_path: 'package.version'
+
+      - name: Reading Current repo version
+        id: repoCurrent
+        uses: notiz-dev/github-action-json-property@release
+        with: 
+          path: 'package.json'
+          prop_path: 'version'
+
       - name: Build the app and release new build
         id: tauriBuilder
         uses: tauri-apps/tauri-action@v0
@@ -124,7 +149,9 @@ jobs:
           nodetail: true
           title: New version of `application` is ready! and maybe of `updater` too!.
           description: |
-            Version `${{ __VERSION__ }}`
+            Application : `v${{ __VERSION__ }}`
+            Repository  : `v${{ __VERSION__ }}`
+
             Click [here](https://tauri-react-template.vercel.app) to see preview!
             Click [here](https://github.com/tanishq-singh-2301/tauri-react-template/releases/latest) to download!
             Click [here](https://tauri-react-updater.deno.dev) to see updater!
