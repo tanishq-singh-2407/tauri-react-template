@@ -117,6 +117,7 @@ jobs:
           tagName: __VERSION__
           releaseName: 'App v__VERSION__'
           releaseBody: 'See the assets to download this version and install.'
+          tauriScript: npx tauri build
 
   discord:
     needs: CI
