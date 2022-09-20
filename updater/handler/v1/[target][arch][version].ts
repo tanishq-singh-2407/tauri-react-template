@@ -1,7 +1,16 @@
 import { oak, semver } from '../../deps.ts';
 import getLatestRelease from '../../services/getLatestRelease.ts';
+import { getAssetSignature, testAsset } from '../../services/getPlatform.ts';
 
-type ParamsType = { target: string; } & { arch: string; } & { current_version: string; } & Record<string | number, string | undefined>
+type ParamsType = { target: string; } & { arch: string; } & { current_version: string; } & Record<string | number, string | undefined>;
+
+type TauriUpdateResponse = {
+  url: string
+  version: string
+  notes?: string
+  pub_date?: string
+  signature?: string
+}
 
 const handler: oak.RouterMiddleware<"/v1/:target/:arch/:current_version", ParamsType, Record<string, string>> = async ({ response, params, request }) => {
     const { target, arch, current_version } = params;
@@ -16,7 +25,27 @@ const handler: oak.RouterMiddleware<"/v1/:target/:arch/:current_version", Params
             if (latestVersion && semver.valid(latestVersion)) {
                 if (currentVersion && semver.valid(currentVersion)) {
                     if (semver.gt(latestVersion, currentVersion)) { // The user has older version, please update
-                        console.log(latestVersion, currentVersion);
+                        const match = latestRelease.assets.find(({ name }) => testAsset(target as any, arch as any, name));
+
+                        if (match) {
+                            const signature = await getAssetSignature(match.name, latestRelease.assets);
+
+                            if (signature) {
+                                const data: TauriUpdateResponse = {
+                                    url: match.browser_download_url,
+                                    version: latestVersion,
+                                    notes: latestRelease.body,
+                                    pub_date: latestRelease.published_at,
+                                    signature,
+                                }
+
+                                response.status = 200;
+                                response.type = "application/json";
+                                response.body = data;
+
+                                return;
+                            }
+                        }
                     }
                 }
             }
