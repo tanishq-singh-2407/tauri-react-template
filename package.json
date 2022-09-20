@@ -9,7 +9,7 @@
         "preview": "vite preview",
         "tauri": "tauri",
         "serve": "serve -s dist",
-        "pretty": "prettier --write src",
+        "pretty": "prettier --write src && prettier --write src-tauri/src",
         "updater": "deno run --allow-net ./updater/index.ts"
     },
     "dependencies": {
