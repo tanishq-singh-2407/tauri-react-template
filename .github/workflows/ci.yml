@@ -59,8 +59,8 @@ jobs:
           nodetail: true
           title: New version of `updater` is ready!
           description: |
-            Application : `v${{ steps.repoCurrent.outputs.prop }}`
-            Repository  : `v${{ steps.appCurrent.outputs.prop }}`
+            Repository  : `v${{ steps.repoCurrent.outputs.prop }}`
+            Application : `v${{ steps.appCurrent.outputs.prop }}`
 
             Click [here](https://tauri-react-template.vercel.app) to see preview!
             Click [here](https://github.com/tanishq-singh-2301/tauri-react-template/releases/latest) to download!
