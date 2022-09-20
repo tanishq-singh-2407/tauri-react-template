@@ -10,7 +10,7 @@ jobs:
     name: Check update for appCurrent
     runs-on: ubuntu-latest
 
-    outputs:
+    env:
       latest_app: ${{ steps.appLatest.outputs.release }}
       current_app: ${{ steps.appCurrent.outputs.prop }}
       current_repo: ${{ steps.repoCurrent.outputs.prop }}
@@ -66,7 +66,7 @@ jobs:
           description: |
             Application : `v${{ __VERSION__ }}`
             Repository  : `v${{ __VERSION__ }}`
-            
+
             Click [here](https://tauri-react-template.vercel.app) to see preview!
             Click [here](https://github.com/tanishq-singh-2301/tauri-react-template/releases/latest) to download!
             Click [here](https://tauri-react-updater.deno.dev) to see updater!
@@ -81,7 +81,7 @@ jobs:
 
     runs-on: ${{ matrix.platform }}
 
-    outputs:
+    env:
       current_app: ${{ steps.appCurrent.outputs.prop }}
       current_repo: ${{ steps.repoCurrent.outputs.prop }}
 
