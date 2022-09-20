@@ -20,7 +20,6 @@ const handler: oak.RouterMiddleware<
     Record<string, string>
 > = async ({ response, params, request }) => {
     const { target, arch, current_version } = params;
-    console.log(params);
 
     if (target && arch && current_version) {
         const latestRelease = await getLatestRelease(request);

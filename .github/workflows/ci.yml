@@ -6,22 +6,13 @@ on:
       - 'main'
 
 jobs:
-  CI:
-    strategy:
-      fail-fast: false
-      matrix:
-        platform: [ubuntu-latest, windows-latest]
-
-    runs-on: ${{ matrix.platform }}
+  Check-Update:
+    name: Check update for appCurrent
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-
-      - name: Node.js setup
-        uses: actions/setup-node@v1
-        with:
-          node-version: 16
 
       - name: Reading latest release version
         id: appLatest
@@ -40,6 +31,35 @@ jobs:
 
       - run: echo "Latest Release,   v${{ steps.appLatest.outputs.release }}"
       - run: echo "Current Building, v${{ steps.appCurrent.outputs.prop }}"
+
+      - name: Check Versions
+        if: steps.appLatest.outputs.release == steps.appCurrent.outputs.prop
+        run: exit 1
+
+      - uses: vishnudxb/cancel-workflow@v1.2
+        if: failure()
+        with:
+          workflow_id: ${{ github.run_id }}
+          access_token: ${{ github.token }}
+
+  CI:
+    needs: Check-Update
+
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [ubuntu-latest, windows-latest]
+
+    runs-on: ${{ matrix.platform }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Node.js setup
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v2.2.2
@@ -63,7 +83,6 @@ jobs:
           pnpm build
 
       - name: Build the app and release new build
-        if: steps.appLatest.outputs.release != steps.appCurrent.outputs.prop
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
