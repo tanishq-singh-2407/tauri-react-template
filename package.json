@@ -1,8 +1,12 @@
 {
     "name": "tauri-react-template",
     "private": true,
-    "version": "0.0.13",
+    "version": "0.0.14",
     "type": "module",
+    "author": "Tanishq Singh <tanishqsingh640@gmail.com>",
+    "contributors": [],
+    "repository": "git+https://github.com/tanishq-singh-2301/tauri-react-template",
+    "license": "MIT",
     "scripts": {
         "dev": "vite",
         "build": "tsc && vite build",
@@ -12,6 +16,20 @@
         "pretty": "prettier --write src && prettier --write updater",
         "updater": "deno run --allow-net ./updater/index.ts"
     },
+    "bugs": {
+        "url": "https://github.com/tanishq-singh-2301/tauri-react-template/issues"
+    },
+    "homepage": "https://github.com/tanishq-singh-2301/tauri-react-template#readme",
+    "keywords": [
+        "react",
+        "typescript",
+        "tauri",
+        "tauri-updater",
+        "server",
+        "github-actions",
+        "tailwindcss",
+        "tauri-updater-server"
+    ],
     "dependencies": {
         "@tauri-apps/api": "^1.1.0",
         "react": "^18.2.0",
