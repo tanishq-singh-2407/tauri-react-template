@@ -12,11 +12,8 @@ dist
 dist-ssr
 *.local
 
+.env
 # Editor directories and files
 
 .idea
 .DS_Store
-
-tauri-private.key
-tauri-private.key.pub
-tauri-private.key.password

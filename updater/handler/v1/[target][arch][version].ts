@@ -6,6 +6,7 @@ const handler: oak.RouterMiddleware<"/v1/:target/:arch/:current_version", Params
     console.log('params: ', params);
 
     response.status = 204;
+    response.body = null;
 }
 
 export default handler;
