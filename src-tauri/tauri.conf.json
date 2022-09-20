@@ -6,8 +6,8 @@
         "distDir": "../dist"
     },
     "package": {
-        "productName": "small-screen",
-        "version": "0.0.11"
+        "productName": "tauri-react-template",
+        "version": "0.0.12"
     },
     "tauri": {
         "allowlist": {
@@ -62,7 +62,7 @@
                 "fullscreen": false,
                 "height": 600,
                 "resizable": true,
-                "title": "small-screen",
+                "title": "tauri-react-template",
                 "width": 800
             }
         ]

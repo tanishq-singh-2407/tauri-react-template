@@ -29,6 +29,13 @@ jobs:
           path: 'src-tauri/tauri.conf.json'
           prop_path: 'package.version'
 
+      - name: Reading Current repo version
+        id: repoCurrent
+        uses: notiz-dev/github-action-json-property@release
+        with: 
+          path: 'package.json'
+          prop_path: 'version'
+
       - run: echo "Latest Release,   v${{ steps.appLatest.outputs.release }}"
       - run: echo "Current Building, v${{ steps.appCurrent.outputs.prop }}"
 
@@ -36,12 +43,26 @@ jobs:
         if: steps.appLatest.outputs.release == steps.appCurrent.outputs.prop
         run: exit 1
 
-      - uses: vishnudxb/cancel-workflow@v1.2
+      - name: Cancel workflow if no new update (app)
+        uses: vishnudxb/cancel-workflow@v1.2
         if: failure()
         with:
           repo: tanishq-singh-2301/tauri-react-template
           workflow_id: ${{ github.run_id }}
           access_token: ${{ github.token }}
+
+      - name: Update discord if job failed
+        uses: sarisia/actions-status-discord@v1
+        if: failure()
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          nodetail: true
+          title: New version of `updater` is ready!
+          description: |
+            Version `${{ steps.repoCurrent.outputs.prop }}`
+            Click [here](https://tauri-react-template.vercel.app) to see preview!
+            Click [here](https://github.com/tanishq-singh-2301/tauri-react-template/releases/latest) to download!
+            Click [here](https://tauri-react-updater.deno.dev) to see updater!
 
   CI:
     needs: Check-Update
@@ -84,6 +105,7 @@ jobs:
           pnpm build
 
       - name: Build the app and release new build
+        id: tauriBuilder
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -93,3 +115,16 @@ jobs:
           tagName: __VERSION__
           releaseName: 'App v__VERSION__'
           releaseBody: 'See the assets to download this version and install.'
+
+      - name: Update discord if job succeeded
+        uses: sarisia/actions-status-discord@v1
+        if: success()
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          nodetail: true
+          title: New version of `application` is ready! and maybe of `updater` too!.
+          description: |
+            Version `${{ __VERSION__ }}`
+            Click [here](https://tauri-react-template.vercel.app) to see preview!
+            Click [here](https://github.com/tanishq-singh-2301/tauri-react-template/releases/latest) to download!
+            Click [here](https://tauri-react-updater.deno.dev) to see updater!
