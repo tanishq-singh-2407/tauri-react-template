@@ -1,5 +1,5 @@
-import { oak } from './deps.ts';
-import router from './router/index.ts';
+import { oak } from "./deps.ts";
+import router from "./router/index.ts";
 
 const port = 5000;
 const app = new oak.Application();

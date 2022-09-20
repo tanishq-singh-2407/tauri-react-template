@@ -1,34 +1,46 @@
-import { oak, semver } from '../../deps.ts';
-import getLatestRelease from '../../services/getLatestRelease.ts';
-import { getAssetSignature, testAsset } from '../../services/getPlatform.ts';
+import { oak, semver } from "../../deps.ts";
+import getLatestRelease from "../../services/getLatestRelease.ts";
+import { getAssetSignature, testAsset } from "../../services/getPlatform.ts";
 
-type ParamsType = { target: string; } & { arch: string; } & { current_version: string; } & Record<string | number, string | undefined>;
+type ParamsType = { target: string } & { arch: string } & {
+    current_version: string;
+} & Record<string | number, string | undefined>;
 
 type TauriUpdateResponse = {
-  url: string
-  version: string
-  notes?: string
-  pub_date?: string
-  signature?: string
-}
+    url: string;
+    version: string;
+    notes?: string;
+    pub_date?: string;
+    signature?: string;
+};
 
-const handler: oak.RouterMiddleware<"/v1/:target/:arch/:current_version", ParamsType, Record<string, string>> = async ({ response, params, request }) => {
+const handler: oak.RouterMiddleware<
+    "/v1/:target/:arch/:current_version",
+    ParamsType,
+    Record<string, string>
+> = async ({ response, params, request }) => {
     const { target, arch, current_version } = params;
-    
+
     if (target && arch && current_version) {
         const latestRelease = await getLatestRelease(request);
-        
+
         if (latestRelease) {
             const latestVersion = latestRelease.tag_name.split("v").pop();
             const currentVersion = current_version;
 
             if (latestVersion && semver.valid(latestVersion)) {
                 if (currentVersion && semver.valid(currentVersion)) {
-                    if (semver.gt(latestVersion, currentVersion)) { // The user has older version, please update
-                        const match = latestRelease.assets.find(({ name }) => testAsset(target as any, arch as any, name));
+                    if (semver.gt(latestVersion, currentVersion)) {
+                        // The user has older version, please update
+                        const match = latestRelease.assets.find(({ name }) =>
+                            testAsset(target as any, arch as any, name)
+                        );
 
                         if (match) {
-                            const signature = await getAssetSignature(match.name, latestRelease.assets);
+                            const signature = await getAssetSignature(
+                                match.name,
+                                latestRelease.assets
+                            );
 
                             if (signature) {
                                 const data: TauriUpdateResponse = {
@@ -37,7 +49,7 @@ const handler: oak.RouterMiddleware<"/v1/:target/:arch/:current_version", Params
                                     notes: latestRelease.body,
                                     pub_date: latestRelease.published_at,
                                     signature,
-                                }
+                                };
 
                                 response.status = 200;
                                 response.type = "application/json";
@@ -54,6 +66,6 @@ const handler: oak.RouterMiddleware<"/v1/:target/:arch/:current_version", Params
 
     response.status = 404;
     response.body = "Not found";
-}
+};
 
 export default handler;

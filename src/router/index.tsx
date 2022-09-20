@@ -1,4 +1,4 @@
-import { Home, Watch } from "./imports";
+import { Home } from "./imports";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 const App = () => {
@@ -6,7 +6,6 @@ const App = () => {
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/watch" element={<Watch />} />
             </Routes>
         </BrowserRouter>
     );

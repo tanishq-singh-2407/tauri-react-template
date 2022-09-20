@@ -1,7 +1,7 @@
 {
     "name": "small-screen",
     "private": true,
-    "version": "0.0.9",
+    "version": "0.0.10",
     "type": "module",
     "scripts": {
         "dev": "vite",
@@ -9,16 +9,14 @@
         "preview": "vite preview",
         "tauri": "tauri",
         "serve": "serve -s dist",
-        "pretty": "prettier --write src && prettier --write src-tauri/src",
+        "pretty": "prettier --write src && prettier --write updater",
         "updater": "deno run --allow-net ./updater/index.ts"
     },
     "dependencies": {
         "@tauri-apps/api": "^1.1.0",
-        "joi": "^17.6.0",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
-        "react-router-dom": "^6.4.0",
-        "react-videotape": "^1.2.14"
+        "react-router-dom": "^6.4.0"
     },
     "devDependencies": {
         "@tauri-apps/cli": "^1.1.0",
