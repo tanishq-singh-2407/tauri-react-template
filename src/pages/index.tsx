@@ -37,7 +37,10 @@ const Home = (): JSX.Element => {
                                 }
                             }
                         } catch (_) {
-                            console.error((_ as any).message);
+                            if (typeof (_ as any).message === "string") {
+                                console.error((_ as any).message);
+                                setTemp((_ as any).message)
+                            }
                         }
                     }}
                 >
