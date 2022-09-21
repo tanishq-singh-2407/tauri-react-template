@@ -1,33 +1,29 @@
-import { type } from '@tauri-apps/api/os';
-import { useEffect, useState } from 'react';
+import { confirm } from '@tauri-apps/api/dialog';
+import { useState } from 'react';
 
 const IS_APP: boolean = import.meta.env.VITE_IS_APP as string === "true";
 
 const Home = () => {
-    const [os, setOs] = useState<string>("");
-
-    useEffect(() => {
-        if (IS_APP)
-            (async () => {
-                const osType = await type();
-                setOs(osType);
-            })();
-
-        else
-            setOs("Web");
-    }, []);
+    const [is, setIs] = useState<boolean>(false);
 
     return (
         <div className="min-h-visible h-full w-full">
             <main className="h-full w-full flex justify-center items-center">
-                <span
-                    className='text-black font-semibold text-base cursor-pointer'
-                    onClick={() => {
-                        Notification.requestPermission()
-                            .then(permission => permission && new Notification("Hi There!"))
-                            .catch(console.error);
-                    }}
-            >{os}</span>
+                {
+                    IS_APP &&
+                    <span
+                        className='text-black font-semibold text-base cursor-pointer'
+                        onClick={async() => {
+                            const so = await confirm('Just a dialog box api test. Are you sure?', { title: 'Tanishq Singh', type: 'warning' });
+                            setIs(so);
+                        }}
+                        style={{
+                            color: is ? "red" : "black"
+                        }}
+                    >
+                        Confirm
+                    </span>
+                }
             </main>
         </div>
     );

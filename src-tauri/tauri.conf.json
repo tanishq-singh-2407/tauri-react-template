@@ -7,7 +7,7 @@
     },
     "package": {
         "productName": "tauri-react-template",
-        "version": "1.0.25"
+        "version": "1.0.26"
     },
     "tauri": {
         "allowlist": {
@@ -47,7 +47,7 @@
             }
         },
         "security": {
-            "csp": null
+            "csp": "default-src 'self'; img-src 'self' asset: https://asset.localhost"
         },
         "updater": {
             "active": true,
