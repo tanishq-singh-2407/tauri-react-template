@@ -48,6 +48,7 @@ jobs:
 
   CI:
     needs: read-versions
+    name: CI
     if: needs.read-versions.outputs.current-app-version != needs.read-versions.outputs.latest-app-version
 
     strategy:
@@ -98,14 +99,21 @@ jobs:
           releaseName: 'App v__VERSION__'
           releaseBody: 'See the assets to download this version and install.'
 
+  discord-new-release:
+    name: Send update in discord (New Release)
+    needs: [CI, read-versions]
+
+    runs-on: ubuntu-latest
+
+    steps:
       - name: Update discord if job succeeded
         uses: sarisia/actions-status-discord@v1
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
           nodetail: true
           notimestamp: true
-          color: 0xff91a4
-          title: New version of `application` is ready! and maybe of `updater` too!.
+          color: 0xecc5fb
+          title: New version of `application` is ready! and maybe of `updater` too!!.
           description: |
             Application : `v${{ needs.read-versions.outputs.current-app-version }}`
             Repository  : `v${{ needs.read-versions.outputs.current-repo-version }}`
@@ -113,3 +121,28 @@ jobs:
             Click [here](https://tauri-react-template.vercel.app) to see preview!
             Click [here](https://github.com/tanishq-singh-2301/tauri-react-template/releases/latest) to download!
             Click [here](https://tauri-react-updater.deno.dev) to see updater!
+
+  discord-no-release:
+    name: Send update in discord (No New Release)
+    needs: [CI]
+    if: needs.read-versions.outputs.current-app-version == needs.read-versions.outputs.latest-app-version
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Update discord if job succeeded
+        uses: sarisia/actions-status-discord@v1
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          nodetail: true
+          notimestamp: true
+          color: 0xfa7070
+          title: Updated `repository`!!.
+          description: |
+            Application : `v${{ needs.read-versions.outputs.current-app-version }}`
+            Repository  : `v${{ needs.read-versions.outputs.current-repo-version }}`
+
+            Click [here](https://tauri-react-template.vercel.app) to see preview!
+            Click [here](https://github.com/tanishq-singh-2301/tauri-react-template/releases/latest) to download!
+            Click [here](https://tauri-react-updater.deno.dev) to see updater!
+  
