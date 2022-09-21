@@ -7,8 +7,6 @@ const Home = () => {
     const [os, setOs] = useState<string>("");
 
     useEffect(() => {
-        console.log(IS_APP);
-
         if (IS_APP)
             (async () => {
                 const osType = await type();
@@ -22,7 +20,14 @@ const Home = () => {
     return (
         <div className="min-h-visible h-full w-full">
             <main className="h-full w-full flex justify-center items-center">
-                <span>{os}</span>
+                <span
+                    className='text-black font-semibold text-base cursor-pointer'
+                    onClick={() => {
+                        Notification.requestPermission()
+                            .then(permission => permission && new Notification("Hi There!"))
+                            .catch(console.error);
+                    }}
+            >{os}</span>
             </main>
         </div>
     );

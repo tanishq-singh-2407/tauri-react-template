@@ -7,7 +7,7 @@
     },
     "package": {
         "productName": "tauri-react-template",
-        "version": "1.0.19"
+        "version": "1.0.20"
     },
     "tauri": {
         "allowlist": {
