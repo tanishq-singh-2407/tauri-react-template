@@ -1,6 +1,6 @@
 [package]
 name = "tauri-react-template"
-version = "1.0.22"
+version = "1.0.23"
 description = "A Tauri App"
 authors = ["Tanishq Singh"]
 license = "MIT"
