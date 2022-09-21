@@ -124,7 +124,7 @@ jobs:
 
   discord-no-release:
     name: Send update in discord (No New Release)
-    needs: [CI]
+    needs: [read-versions]
     if: needs.read-versions.outputs.current-app-version == needs.read-versions.outputs.latest-app-version
 
     runs-on: ubuntu-latest
