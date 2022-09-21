@@ -4,11 +4,9 @@ image:
 tasks:
   - name: WebApp
     before: pnpm install
-    command: pnpm dev
 
   - name: Updater
     before: deno cache ./updater/index.ts
-    command: pnpm updater
 
 ports:
   - name: Updater (server)
