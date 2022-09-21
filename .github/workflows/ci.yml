@@ -47,6 +47,7 @@ jobs:
 
   CI:
     needs: read-versions
+    if: needs.read-versions.outputs.current-app-version != needs.read-versions.outputs.current-repo-version
 
     strategy:
       fail-fast: false
@@ -55,11 +56,9 @@ jobs:
 
     runs-on: ${{ matrix.platform }}
 
-    env:
-      current-app-version: ${{ needs.read-versions.outputs.current-app-version }}
-      current-repo-version: ${{ needs.read-versions.outputs.current-repo-version }}
-
-    if: ${{ env.latest-app-version != env.current-app-version }}
+    # env:
+    #   current-app-version: ${{ needs.read-versions.outputs.current-app-version }}
+    #   current-repo-version: ${{ needs.read-versions.outputs.current-repo-version }}
 
     steps:
       - name: Checkout repository
@@ -109,8 +108,8 @@ jobs:
           nodetail: true
           title: New version of `application` is ready! and maybe of `updater` too!.
           description: |
-            Application : `v${{ env.current-app-version }}`
-            Repository  : `v${{ env.current-repo-version }}`
+            Application : `v${{ needs.read-versions.outputs.current-app-version }}`
+            Repository  : `v${{ needs.read-versions.outputs.current-repo-version }}`
 
             Click [here](https://tauri-react-template.vercel.app) to see preview!
             Click [here](https://github.com/tanishq-singh-2301/tauri-react-template/releases/latest) to download!
