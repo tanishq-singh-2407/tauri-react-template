@@ -101,23 +101,6 @@ jobs:
           releaseName: 'App v__VERSION__'
           releaseBody: 'See the assets to download this version and install.'
 
-  discord:
-    needs: [CI, read-versions]
-    runs-on: ubuntu-latest
-
-    env:
-      current-app-version: ${{ needs.read-versions.outputs.current-app-version }}
-      current-repo-version: ${{ needs.read-versions.outputs.current-repo-version }}
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Node.js setup
-        uses: actions/setup-node@v1
-        with:
-          node-version: 16
-
       - name: Update discord if job succeeded
         uses: sarisia/actions-status-discord@v1
         with:
