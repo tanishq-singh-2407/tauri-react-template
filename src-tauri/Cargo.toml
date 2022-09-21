@@ -4,7 +4,7 @@ version = "1.0.18"
 description = "A Tauri App"
 authors = ["Tanishq Singh"]
 license = "MIT"
-repository = ""
+repository = "https://github.com/tanishq-singh-2301/tauri-react-template.git"
 edition = "2021"
 rust-version = "1.57"
 
