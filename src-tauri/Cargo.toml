@@ -1,9 +1,9 @@
 [package]
 name = "tauri-react-template"
-version = "1.0.17"
+version = "1.0.18"
 description = "A Tauri App"
-authors = ["you"]
-license = ""
+authors = ["Tanishq Singh"]
+license = "MIT"
 repository = ""
 edition = "2021"
 rust-version = "1.57"
