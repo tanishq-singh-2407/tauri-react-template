@@ -1,7 +1,7 @@
 {
     "name": "tauri-react-template",
     "private": true,
-    "version": "1.0.23",
+    "version": "1.0.24",
     "type": "module",
     "author": "Tanishq Singh <tanishqsingh640@gmail.com>",
     "contributors": [],
