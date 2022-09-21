@@ -41,13 +41,14 @@ jobs:
           path: 'package.json'
           prop_path: 'version'
 
-      - run: echo "Latest App,   v${{ steps.appLatest.outputs.release }}"
-      - run: echo "Current App,  v${{ steps.appCurrent.outputs.prop }}"
-      - run: echo "Current Repo, v${{ steps.repoCurrent.outputs.prop }}"
+      - run: |
+          echo Latest App   v${{ steps.appLatest.outputs.release }}
+          echo Current App  v${{ steps.appCurrent.outputs.prop }}
+          echo Current Repo v${{ steps.repoCurrent.outputs.prop }}
 
   CI:
     needs: read-versions
-    if: needs.read-versions.outputs.current-app-version != needs.read-versions.outputs.current-repo-version
+    if: needs.read-versions.outputs.current-app-version != needs.read-versions.outputs.latest-app-version
 
     strategy:
       fail-fast: false
@@ -55,10 +56,6 @@ jobs:
         platform: [ubuntu-latest, windows-latest]
 
     runs-on: ${{ matrix.platform }}
-
-    # env:
-    #   current-app-version: ${{ needs.read-versions.outputs.current-app-version }}
-    #   current-repo-version: ${{ needs.read-versions.outputs.current-repo-version }}
 
     steps:
       - name: Checkout repository
@@ -106,6 +103,8 @@ jobs:
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
           nodetail: true
+          notimestamp: true
+          color: 0xff91a4
           title: New version of `application` is ready! and maybe of `updater` too!.
           description: |
             Application : `v${{ needs.read-versions.outputs.current-app-version }}`
