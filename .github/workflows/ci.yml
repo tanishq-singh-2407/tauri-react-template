@@ -59,7 +59,7 @@ jobs:
       current-app-version: ${{ needs.read-versions.outputs.current-app-version }}
       current-repo-version: ${{ needs.read-versions.outputs.current-repo-version }}
 
-    if: $latest-app-version != $current-app-version
+    if: ${{ env.latest-app-version != env.current-app-version }}
 
     steps:
       - name: Checkout repository
