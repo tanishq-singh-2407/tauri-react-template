@@ -109,8 +109,8 @@ jobs:
           nodetail: true
           title: New version of `application` is ready! and maybe of `updater` too!.
           description: |
-            Application : `v${{ $current-app-version }}`
-            Repository  : `v${{ $current-repo-version }}`
+            Application : `v${{ env.current-app-version }}`
+            Repository  : `v${{ env.current-repo-version }}`
 
             Click [here](https://tauri-react-template.vercel.app) to see preview!
             Click [here](https://github.com/tanishq-singh-2301/tauri-react-template/releases/latest) to download!
