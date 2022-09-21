@@ -6,9 +6,14 @@ on:
       - 'main'
 
 jobs:
-  Check-Update:
+  read-versions:
     name: Check update for appCurrent
     runs-on: ubuntu-latest
+
+    outputs:
+      latest-app-version: ${{ steps.appLatest.outputs.release }}
+      current-app-version: ${{ steps.appCurrent.outputs.prop }}
+      current-repo-version: ${{ steps.repoCurrent.outputs.prop }}
 
     steps:
       - name: Checkout repository
@@ -36,44 +41,23 @@ jobs:
           path: 'package.json'
           prop_path: 'version'
 
-      - run: echo "Latest Release,   v${{ steps.appLatest.outputs.release }}"
-      - run: echo "Current Building, v${{ steps.appCurrent.outputs.prop }}"
-
-      - name: Check Versions
-        if: steps.appLatest.outputs.release == steps.appCurrent.outputs.prop
-        run: exit 1
-
-      - name: Cancel workflow if no new update (app)
-        uses: vishnudxb/cancel-workflow@v1.2
-        if: failure()
-        with:
-          repo: tanishq-singh-2301/tauri-react-template
-          workflow_id: ${{ github.run_id }}
-          access_token: ${{ github.token }}
-
-      - name: Update discord if job failed
-        uses: sarisia/actions-status-discord@v1
-        if: failure()
-        with:
-          webhook: ${{ secrets.DISCORD_WEBHOOK }}
-          nodetail: true
-          title: New version of `updater` is ready!
-          description: |
-            Repository  : `v${{ steps.repoCurrent.outputs.prop }}`
-            Application : `v${{ steps.appCurrent.outputs.prop }}`
-
-            Click [here](https://tauri-react-template.vercel.app) to see preview!
-            Click [here](https://github.com/tanishq-singh-2301/tauri-react-template/releases/latest) to download!
-            Click [here](https://tauri-react-updater.deno.dev) to see updater!
+      - run: echo "Latest App,   v${{ steps.appLatest.outputs.release }}"
+      - run: echo "Current App,  v${{ steps.appCurrent.outputs.prop }}"
+      - run: echo "Current Repo, v${{ steps.repoCurrent.outputs.prop }}"
 
   CI:
-    needs: Check-Update
+    needs: read-versions
+
+    env:
+      current-app-version: ${{ needs.read-versions.outputs.current-app-version }}
+      current-repo-version: ${{ needs.read-versions.outputs.current-repo-version }}
 
     strategy:
       fail-fast: false
       matrix:
         platform: [ubuntu-latest, windows-latest]
 
+    if: latest-app-version != current-app-version
     runs-on: ${{ matrix.platform }}
 
     steps:
@@ -118,8 +102,12 @@ jobs:
           releaseBody: 'See the assets to download this version and install.'
 
   discord:
-    needs: CI
+    needs: [CI, read-versions]
     runs-on: ubuntu-latest
+
+    env:
+      current-app-version: ${{ needs.read-versions.outputs.current-app-version }}
+      current-repo-version: ${{ needs.read-versions.outputs.current-repo-version }}
 
     steps:
       - name: Checkout repository
@@ -130,30 +118,15 @@ jobs:
         with:
           node-version: 16
 
-      - name: Reading Current tauri-app version
-        id: appCurrent
-        uses: notiz-dev/github-action-json-property@release
-        with: 
-          path: 'src-tauri/tauri.conf.json'
-          prop_path: 'package.version'
-
-      - name: Reading Current repo version
-        id: repoCurrent
-        uses: notiz-dev/github-action-json-property@release
-        with: 
-          path: 'package.json'
-          prop_path: 'version'
-
       - name: Update discord if job succeeded
         uses: sarisia/actions-status-discord@v1
-        if: success()
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
           nodetail: true
           title: New version of `application` is ready! and maybe of `updater` too!.
           description: |
-            Application : `v${{ steps.appCurrent.outputs.prop }}`
-            Repository  : `v${{ steps.repoCurrent.outputs.prop }}`
+            Application : `v${{ current-app-version }}`
+            Repository  : `v${{ current-repo-version }}`
 
             Click [here](https://tauri-react-template.vercel.app) to see preview!
             Click [here](https://github.com/tanishq-singh-2301/tauri-react-template/releases/latest) to download!
