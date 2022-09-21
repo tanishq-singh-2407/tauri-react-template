@@ -48,17 +48,18 @@ jobs:
   CI:
     needs: read-versions
 
-    env:
-      current-app-version: ${{ needs.read-versions.outputs.current-app-version }}
-      current-repo-version: ${{ needs.read-versions.outputs.current-repo-version }}
-
     strategy:
       fail-fast: false
       matrix:
         platform: [ubuntu-latest, windows-latest]
 
-    if: $latest-app-version != $current-app-version
     runs-on: ${{ matrix.platform }}
+
+    env:
+      current-app-version: ${{ needs.read-versions.outputs.current-app-version }}
+      current-repo-version: ${{ needs.read-versions.outputs.current-repo-version }}
+
+    if: $latest-app-version != $current-app-version
 
     steps:
       - name: Checkout repository
