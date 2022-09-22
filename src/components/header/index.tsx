@@ -14,13 +14,7 @@ const navigation: Navigation[] = [
     { name: "Home", href: "/", current: true },
     { name: "About", href: "/about", current: false },
     { name: "Contact", href: "/contact", current: false },
-    { name: "Functions", href: "/functions", current: false },
-    {
-        name: "Github",
-        href: "https://github.com/tanishq-singh-2301/tauri-react-template",
-        current: false,
-        target: "_blank",
-    },
+    { name: "Functions", href: "/functions", current: false }
 ];
 
 /**
