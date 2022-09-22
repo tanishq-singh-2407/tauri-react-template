@@ -1,7 +1,7 @@
 {
     "name": "tauri-react-template",
     "private": true,
-    "version": "1.0.29",
+    "version": "1.0.30",
     "type": "module",
     "author": "Tanishq Singh <tanishqsingh640@gmail.com>",
     "contributors": [],
@@ -31,6 +31,8 @@
         "tauri-updater-server"
     ],
     "dependencies": {
+        "@headlessui/react": "^1.7.2",
+        "@heroicons/react": "^2.0.11",
         "@tauri-apps/api": "^1.1.0",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",

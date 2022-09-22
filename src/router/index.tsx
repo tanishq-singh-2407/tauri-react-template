@@ -1,4 +1,4 @@
-import { Home } from "./imports";
+import { Home, About, Contact, Functions } from "./imports";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 const App = () => {
@@ -6,6 +6,9 @@ const App = () => {
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Home />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/functions" element={<Functions />} />
             </Routes>
         </BrowserRouter>
     );

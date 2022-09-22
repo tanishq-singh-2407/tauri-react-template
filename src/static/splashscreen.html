@@ -1,23 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Document</title>
     </head>
     <body class="bg-black">
         <div>
             <div className="min-h-visible h-full w-full">
-                <main className="h-full w-full flex justify-center items-center">
-            
+                <main
+                    className="h-full w-full flex justify-center items-center"
+                >
                     <span class="text-white font-bold text-3xl">LOADING</span>
-            
                 </main>
             </div>
         </div>
     </body>
     <script>
-        document.addEventListener('DOMContentLoaded', () => window.__TAURI_INVOKE__('close_splashscreen'));
+        document.addEventListener("DOMContentLoaded", () =>
+            window.__TAURI_INVOKE__("close_splashscreen")
+        );
     </script>
 </html>
