@@ -7,7 +7,7 @@
     },
     "package": {
         "productName": "tauri-react-template",
-        "version": "1.0.26"
+        "version": "1.0.27"
     },
     "tauri": {
         "allowlist": {
@@ -63,7 +63,15 @@
                 "height": 600,
                 "resizable": true,
                 "title": "tauri-react-template",
-                "width": 800
+                "width": 800,
+                "visible": false
+            },
+            {
+                "width": 800,
+                "height": 600,
+                "decorations": false,
+                "url": "../src/static/splashscreen.html",
+                "label": "splashscreen"
             }
         ]
     }
