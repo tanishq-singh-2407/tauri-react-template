@@ -4,7 +4,7 @@ import { ask } from "@tauri-apps/api/dialog";
 import { appWindow } from "@tauri-apps/api/window";
 import { relaunch, exit } from "@tauri-apps/api/process";
 
-const IS_WEB = (async() => await isWebApp())();  
+const IS_WEB = (async () => await isWebApp())();
 
 const Functions = ({}) => {
     return (
@@ -21,7 +21,7 @@ const Functions = ({}) => {
                     <button
                         className="cursor-pointer py-1"
                         onClick={async () =>
-                            await IS_WEB
+                            (await IS_WEB)
                                 ? alert("only works in app.")
                                 : await ask(
                                       "This action cannot be reverted. Are you sure?",
@@ -34,7 +34,7 @@ const Functions = ({}) => {
                     <button
                         className="cursor-pointer py-1"
                         onClick={async () =>
-                            await IS_WEB
+                            (await IS_WEB)
                                 ? alert("only works in app.")
                                 : await ask(
                                       "This action cannot be reverted. Are you sure?",
@@ -47,7 +47,7 @@ const Functions = ({}) => {
                     <button
                         className="cursor-pointer py-1"
                         onClick={async () =>
-                            await IS_WEB
+                            (await IS_WEB)
                                 ? alert("only works in app.")
                                 : await ask(
                                       "This action cannot be reverted. Are you sure?",
@@ -91,7 +91,8 @@ const Functions = ({}) => {
                     <button
                         className="cursor-pointer py-1"
                         onClick={async () =>
-                            !await IS_WEB && (await appWindow.setFullscreen(true))
+                            !(await IS_WEB) &&
+                            (await appWindow.setFullscreen(true))
                         }
                     >
                         3.1 Full Screen
@@ -99,7 +100,8 @@ const Functions = ({}) => {
                     <button
                         className="cursor-pointer py-1"
                         onClick={async () =>
-                            !await IS_WEB && (await appWindow.setFullscreen(false))
+                            !(await IS_WEB) &&
+                            (await appWindow.setFullscreen(false))
                         }
                     >
                         3.2 Exit Full Screen
@@ -117,7 +119,8 @@ const Functions = ({}) => {
                     <button
                         className="cursor-pointer py-1"
                         onClick={async () =>
-                            !await IS_WEB && (await appWindow.setAlwaysOnTop(true))
+                            !(await IS_WEB) &&
+                            (await appWindow.setAlwaysOnTop(true))
                         }
                     >
                         4.1 Always on top
@@ -125,7 +128,8 @@ const Functions = ({}) => {
                     <button
                         className="cursor-pointer py-1"
                         onClick={async () =>
-                            !await IS_WEB && (await appWindow.setAlwaysOnTop(false))
+                            !(await IS_WEB) &&
+                            (await appWindow.setAlwaysOnTop(false))
                         }
                     >
                         4.2 Remove Always on top
@@ -143,7 +147,8 @@ const Functions = ({}) => {
                     <button
                         className="cursor-pointer py-1"
                         onClick={async () =>
-                            !await IS_WEB && (await appWindow.setDecorations(true))
+                            !(await IS_WEB) &&
+                            (await appWindow.setDecorations(true))
                         }
                     >
                         5.1 Set Decoration
@@ -151,7 +156,8 @@ const Functions = ({}) => {
                     <button
                         className="cursor-pointer py-1"
                         onClick={async () =>
-                            !await IS_WEB && (await appWindow.setDecorations(false))
+                            !(await IS_WEB) &&
+                            (await appWindow.setDecorations(false))
                         }
                     >
                         5.2 Remove Decoration
@@ -167,7 +173,7 @@ const Functions = ({}) => {
                     <button
                         className="cursor-pointer py-1"
                         onClick={async () =>
-                            !await IS_WEB && (await appWindow.maximize())
+                            !(await IS_WEB) && (await appWindow.maximize())
                         }
                     >
                         6.1 Maximize
@@ -175,7 +181,8 @@ const Functions = ({}) => {
                     <button
                         className="cursor-pointer py-1"
                         onClick={async () =>
-                            !await IS_WEB && (await appWindow.toggleMaximize())
+                            !(await IS_WEB) &&
+                            (await appWindow.toggleMaximize())
                         }
                     >
                         6.2 Toogle Maximize
@@ -183,20 +190,22 @@ const Functions = ({}) => {
                     <button
                         className="cursor-pointer py-1"
                         onClick={async () =>
-                            !await IS_WEB && (await appWindow.minimize())
+                            !(await IS_WEB) && (await appWindow.minimize())
                         }
                     >
                         6.3 Minimize
                     </button>
                     <button
                         className="cursor-pointer py-1"
-                        onClick={async () => !await IS_WEB && (await relaunch())}
+                        onClick={async () =>
+                            !(await IS_WEB) && (await relaunch())
+                        }
                     >
                         6.4 Relaunch
                     </button>
                     <button
                         className="cursor-pointer py-1"
-                        onClick={async () => !await IS_WEB && (await exit())}
+                        onClick={async () => !(await IS_WEB) && (await exit())}
                     >
                         6.5 Exit
                     </button>

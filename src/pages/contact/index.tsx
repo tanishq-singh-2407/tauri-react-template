@@ -5,8 +5,7 @@ const Contact = () => {
     return (
         <div className="min-h-visible h-full w-full flex justify-between items-center flex-col">
             <Header />
-            <div />  {/* Don't Remove this div. */}
-
+            <div /> {/* Don't Remove this div. */}
             <main className="w-full mt-16 py-5 flex flex-col justify-center items-center gap-3">
                 <a
                     target="_blank"
@@ -33,7 +32,6 @@ const Contact = () => {
                     instagram
                 </a>
             </main>
-
             <Footer />
         </div>
     );

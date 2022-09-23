@@ -1,0 +1,10 @@
+#!/bin/sh
+
+echo "Updating Version"
+
+deno run --allow-read --allow-write ./lib/version/repo.ts
+deno run --allow-read --allow-write ./lib/version/app.ts
+
+status=$?
+
+exit $status
