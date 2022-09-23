@@ -1,4 +1,5 @@
 {
+    "$schema": "../node_modules/@tauri-apps/cli/schema.json",
     "build": {
         "beforeDevCommand": "pnpm dev",
         "beforeBuildCommand": "pnpm build",
@@ -7,11 +8,23 @@
     },
     "package": {
         "productName": "tauri-react-template",
-        "version": "1.0.28"
+        "version": "1.0.29"
     },
     "tauri": {
         "allowlist": {
-            "all": true
+            "all": true,
+            "http": {
+                "all": true
+            },
+            "notification": {
+                "all": true
+            },
+            "dialog": {
+                "all": true
+            },
+            "clipboard": {
+                "all": true
+            }
         },
         "bundle": {
             "active": true,
@@ -47,7 +60,7 @@
             }
         },
         "security": {
-            "csp": "default-src 'self'; img-src 'self' asset: https://asset.localhost"
+            "csp": "default-src blob: data: filesystem: media-src: ws: wss: http: https: tauri: 'unsafe-eval' 'unsafe-inline' *"
         },
         "updater": {
             "active": true,
