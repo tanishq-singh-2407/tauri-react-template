@@ -26,7 +26,7 @@ const classNames = (...classes: string[]) => classes.filter(Boolean).join(" ");
 
 const Header = () => {
     return (
-        <header className="w-full">
+        <header className="w-full fixed top-0 left-0 right-0">
             <Disclosure as="nav" className="bg-gray-900 w-full block">
                 {({ open }) => (
                     <>

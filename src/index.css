@@ -16,6 +16,9 @@ body {
 
     min-height: var(--visible-height);
     height: 100%;
+
+    scroll-behavior: none;
+    overflow: hidden;
 }
 
 a {
@@ -29,4 +32,5 @@ a {
 
 body > div {
     height: 100%;
+    overflow: auto;
 }
