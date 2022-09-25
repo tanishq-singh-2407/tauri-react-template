@@ -1,0 +1,9 @@
+#!/bin/sh
+
+echo "Building Package"
+
+pnpm build
+
+status=$?
+
+exit $status

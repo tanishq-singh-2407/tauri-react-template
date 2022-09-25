@@ -20,7 +20,7 @@
     "editor.formatOnSaveMode": "modifications",
     "editor.formatOnType": true,
     "editor.wordWrap": "off",
-    "deno.enable": true,
+    "deno.enable": false,
     "deno.lint": true,
     "deno.enablePaths": ["updater", "lib/version"]
 }

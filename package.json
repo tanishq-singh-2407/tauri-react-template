@@ -1,7 +1,7 @@
 {
     "name": "tauri-react-template",
     "private": true,
-    "version": "1.0.33",
+    "version": "1.0.34",
     "type": "module",
     "author": "Tanishq Singh <tanishqsingh640@gmail.com>",
     "contributors": [],
@@ -13,8 +13,7 @@
         "tauri": "tauri",
         "serve": "serve -s dist",
         "pretty": "prettier --write src && prettier --write updater",
-        "updater": "deno run --allow-net ./updater/index.ts",
-        "preinstall": "cp scripts/* .git/hooks/"
+        "updater": "deno run --allow-net ./updater/index.ts"
     },
     "bugs": {
         "url": "https://github.com/tanishq-singh-2301/tauri-react-template/issues"
