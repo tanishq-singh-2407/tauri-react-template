@@ -36,10 +36,11 @@ jobs:
       - run: |
           yarn --version
           du -hs ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          
-          yarn install
-          du -hs ${{ steps.yarn-cache-dir-path.outputs.dir }}
 
       - name: hlo
         if: steps.yarn-cache.outputs.cache-hit != 'true'
-        run: yarn build
+        run: |
+          yarn install
+          du -hs ${{ steps.yarn-cache-dir-path.outputs.dir }}
+
+      - run: yarn build
