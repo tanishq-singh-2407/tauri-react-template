@@ -18,6 +18,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
 
       - name: Reading latest released version
         id: appLatest
@@ -61,11 +63,13 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
 
       - name: Node.js setup
         uses: actions/setup-node@v1
         with:
-          node-version: 16
+          node-version: '16.x'
 
       - run: npm i -g yarn
 
@@ -84,7 +88,8 @@ jobs:
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
 
-      - uses: actions/cache@v3
+      - name: Caching for yarn dependencies
+        uses: actions/cache@v3
         id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
@@ -96,7 +101,8 @@ jobs:
         if: steps.yarn-cache.outputs.cache-hit != 'true'
         run: yarn install
 
-      - uses: actions/cache@v3
+      - name: Caching for rust ~cargo
+        uses: actions/cache@v3
         with:
           path: |
             ~/.cargo/bin/
