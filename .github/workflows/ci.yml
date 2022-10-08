@@ -71,7 +71,7 @@ jobs:
         with:
           node-version: '16.x'
 
-      - run: npm i -g yarn
+      # - run: npm i -g yarn
 
       - name: Rust setup
         uses: actions-rs/toolchain@v1
@@ -101,28 +101,35 @@ jobs:
         if: steps.yarn-cache.outputs.cache-hit != 'true'
         run: yarn install
 
-      - name: Caching for rust ~cargo
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.cargo/bin/
-            ~/.cargo/registry/index/
-            ~/.cargo/registry/cache/
-            ~/.cargo/git/db/
-            src-tauri/target/
-          key: ${{ runner.os }}-cargo-${{ hashFiles('src-tauri/Cargo.lock') }}
+      - name: test
+        run: |
+          yarn cache dir
+          yarn build
+          yarn tauri --help
+          yarn tauri build
 
-      - name: Build the app and release new build
-        id: tauriBuilder
-        uses: tauri-apps/tauri-action@v0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
-          TAURI_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
-        with:
-          tagName: __VERSION__
-          releaseName: 'App v__VERSION__'
-          releaseBody: 'See the assets to download this version and install.'
+      # - name: Caching for rust ~cargo
+      #   uses: actions/cache@v3
+      #   with:
+      #     path: |
+      #       ~/.cargo/bin/
+      #       ~/.cargo/registry/index/
+      #       ~/.cargo/registry/cache/
+      #       ~/.cargo/git/db/
+      #       src-tauri/target/
+      #     key: ${{ runner.os }}-cargo-${{ hashFiles('src-tauri/Cargo.lock') }}
+
+      # - name: Build the app and release new build
+      #   id: tauriBuilder
+      #   uses: tauri-apps/tauri-action@v0
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
+      #     TAURI_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
+      #   with:
+      #     tagName: __VERSION__
+      #     releaseName: 'App v__VERSION__'
+      #     releaseBody: 'See the assets to download this version and install.'
 
   discord-new-release:
     name: Discord (With Release)
