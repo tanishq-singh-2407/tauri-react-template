@@ -16,15 +16,6 @@ jobs:
         with:
           fetch-depth: 1
 
-      # - name: Node.js setup
-      #   uses: actions/setup-node@v3
-      #   with:
-      #     node-version: '16.x'
-      #     cache: 'yarn'
-
-      # - run: yarn install --frozen-lockfile
-      # - run: yarn build
-
       - uses: pnpm/action-setup@v2
         with:
           version: 6.32.9
