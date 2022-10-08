@@ -1,0 +1,45 @@
+name: TEST
+
+on:
+  push:
+    branches:    
+      - 'main'
+
+jobs:
+  hello:
+    name: Check update for appCurrent
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+
+      - name: Node.js setup
+        uses: actions/setup-node@v1
+        with:
+          node-version: '16.x'
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - uses: actions/cache@v3
+        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - run: |
+          yarn --version
+          du -hs ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          
+          yarn install
+          du -hs ${{ steps.yarn-cache-dir-path.outputs.dir }}
+
+      - name: hlo
+        if: steps.yarn-cache.outputs.cache-hit != 'true'
+        run: yarn build
