@@ -39,6 +39,7 @@ jobs:
           du -hs ${{ steps.yarn-cache-dir-path.outputs.dir }}
 
       - name: hlo
+        if: steps.yarn-cache.outputs.cache-hit != 'true'
         run: |
           yarn --prefer-offline
           du -hs ${{ steps.yarn-cache-dir-path.outputs.dir }}
