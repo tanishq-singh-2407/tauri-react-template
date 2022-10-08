@@ -20,6 +20,7 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '16.x'
+          cache: 'yarn'
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
@@ -38,9 +39,8 @@ jobs:
           du -hs ${{ steps.yarn-cache-dir-path.outputs.dir }}
 
       - name: hlo
-        if: steps.yarn-cache.outputs.cache-hit != 'true'
         run: |
-          yarn install
+          yarn --prefer-offline
           du -hs ${{ steps.yarn-cache-dir-path.outputs.dir }}
 
       - run: yarn build
